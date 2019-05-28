@@ -5,7 +5,7 @@
 // Dependencies
 // =============================================================
 var path = require("path");
-
+var isAuthenticated = require("../config/middleware/isAuth");
 // Routes
 // =============================================================
 module.exports = function(app) {
@@ -33,7 +33,7 @@ module.exports = function(app) {
   });
 
   // authors route loads account.html
-  app.get("/account", function(req, res) {
+  app.get("/account", isAuthenticated, function(req, res) {
     res.sendFile(path.join(__dirname, "../public/account.html"));
   });
 

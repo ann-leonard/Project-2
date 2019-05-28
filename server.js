@@ -23,6 +23,16 @@ app.use(express.json());
 // app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 // app.set("view engine", "handlebars");
 
+//AUTH
+//==============================================================
+var passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy;
+app.use(require('cookie-parser')());
+app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(require('express-session')({ secret: 'oiewurowiqei', resave: true, saveUninitialized: false }));
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Static directory
 app.use(express.static("public"));
 

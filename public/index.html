@@ -67,7 +67,7 @@
                     <input type="checkbox" class="form-check-input" id="exampleCheck1">
                     <label class="form-check-label" for="exampleCheck1">Check me out</label>
                 </div>
-                <button type="submit" class="btn btn-outline-warning">Login</button>
+                <button type="submit" id = 'submitLogin' class="btn btn-outline-warning">Login</button>
 
             </form>
             </br>
@@ -83,6 +83,10 @@
     </footer>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+       <script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
@@ -90,6 +94,33 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <script src="js/getBalance.js" type="text/javascript"></script>
+
+ 
+
+    <script>
+    
+$("#submitLogin").on('click', function(){
+    event.preventDefault();
+    console.log("got onclick")
+    var name = $('#usernameInput').val().trim()
+    var password = $('#InputPassword').val().trim();
+    console.log(name,password)
+    if (name && password){
+        signIn(name, password)
+    }
+    else{ console.log("somethings missing") }
+});
+function signIn(name, password){
+    console.log(name,password)
+    $.post("/api/login", {name,password})
+    .then(function(data){
+        console.log("post successful")
+        console.log(data)
+        window.location = data.redirectUrl
+    })
+}
+
+    </script>
 </body>
 
 </html>
