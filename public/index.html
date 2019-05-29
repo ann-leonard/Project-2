@@ -117,6 +117,8 @@ function signIn(name, password){
         console.log("post successful")
         console.log(data)
         window.location = data.redirectUrl
+    }).catch(function(err){
+        console.log(err)
     })
 }
 

@@ -56,9 +56,10 @@ module.exports = function (app) {
   //this is how passport checks our database for a user 
   passport.use(new LocalStrategy(
   function(name, password, done) {
+    console.log("got to local strat")
     db.User.findOne({ name: name }, function (err, user) {
       if (err) { return done(err); }
-      if (!user) { return done(null, false); }
+      if (!user) return done(null, false, { message: 'Incorrect username.' });
       if (!user.verifyPassword(password)) { return done(null, false); }
       return done(null, user);
     });
@@ -67,9 +68,10 @@ module.exports = function (app) {
 
   // If the user has valid login credentials, send them to the account page.
   //the authenticate function uses the local strategy to check our db for credentials
-  app.post("/api/login", passport.authenticate("local"), function(req, res) {
-    res.redirect("/account");
-  });
+  app.post("/api/login", passport.authenticate("local"), function(req, res){
+    console.log("got past auth")
+    res.send({redirectUrl: "/account"})
+  })
 
   //
 };
