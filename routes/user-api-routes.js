@@ -1,6 +1,5 @@
 var db = require("../models");
-var passport = require('passport')
-  , LocalStrategy = require('passport-local').Strategy;
+var passport = require('../config/passport')
 
 module.exports = function (app) {
   app.get("/api/users", function (req, res) {
@@ -54,6 +53,7 @@ module.exports = function (app) {
   });
   //AUTH
   //this is how passport checks our database for a user 
+  /*
   passport.use(new LocalStrategy(
   function(name, password, done) {
     console.log("got to local strat")
@@ -65,11 +65,12 @@ module.exports = function (app) {
     });
   }
 ));
-
+*/
   // If the user has valid login credentials, send them to the account page.
   //the authenticate function uses the local strategy to check our db for credentials
   app.post("/api/login", passport.authenticate("local"), function(req, res){
     console.log("got past auth")
+    console.log(req.body)
     res.send({redirectUrl: "/account"})
   })
 
